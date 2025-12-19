@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONY WALKMAN TPS-L2 | Infografía</title>
+
+    <!-- FUENTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- ICONOS -->
+    <link href="https://cdn.jsdelivr.net/npm/dflip/css/themify-icons.min.css" rel="stylesheet" type="text/css">
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-color: #050505;      
+            --accent-color: #dc6b2f;  
+            --text-main: #FFFFFF;     
+        }
+
+        body, html {
+            height: 100%; margin: 0;
+            background-color: var(--bg-color);
+            font-family: 'Archivo', sans-serif !important;
+            overflow: hidden;
+        }
+
+        /* FONDO */
+        #grained-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
+        }
+
+        /* VISOR */
+        #openseadragon-viewer {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 10;
+        }
+
+        /* --- BARRA DE HERRAMIENTAS (AJUSTE FINO STUPOR) --- */
+        #custom-toolbar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            padding: 0;
+            
+            /* Espaciado idéntico a la referencia Stupor */
+            gap: 25px; 
+        }
+
+        /* Estilo Botones */
+        .custom-btn {
+            background: transparent;
+            border: none;
+            color: #AAAAAA; /* Gris suave */
+            cursor: pointer;
+            width: auto;  
+            height: 30px; /* Altura fija para alineación vertical */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            padding: 0;
+            outline: none;
+            position: relative; 
+            pointer-events: auto;
+        }
+
+        /* TAMAÑO Y ALINEACIÓN DE ICONOS */
+        .custom-btn i {
+            font-size: 20px; /* Tamaño base más fino */
+            line-height: 1;
+            display: block;
+            font-weight: normal;
+        }
+
+        /* CORRECCIÓN ÓPTICA: El icono 'i' suele verse más grande ópticamente.
+           Lo reducimos ligeramente y lo subimos 1px para centrarlo perfecto con las lupas. */
+        #btn-info i { 
+            font-size: 17px; 
+            position: relative;
+            top: -1px;
+        }
+
+        /* Hover */
+        .custom-btn:hover, .custom-btn.active {
+            color: var(--accent-color);
+            transform: scale(1.2);
+            text-shadow: 0 0 15px rgba(220, 107, 47, 0.6);
+        }
+
+        /* --- MODAL INFO --- */
+        .modal-overlay {
+            display: none; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.98); 
+            z-index: 10000; 
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            color: #fff; max-width: 500px; width: 80%;
+            text-align: center; position: relative;
+        }
+        .modal-line { width: 40px; height: 2px; background-color: var(--accent-color); margin: 20px auto; }
+        .modal-title { font-size: 24px; font-weight: 800; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 3px; }
+        .modal-subtitle { font-size: 11px; color: var(--accent-color); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .modal-body { font-size: 14px; color: #ccc; line-height: 1.6; font-weight: 300; }
+        .modal-note { margin-top: 30px; font-size: 10px; color: #666; border-top: 1px solid #222; padding-top: 15px; }
+        
+        .close-modal { 
+            position: absolute; top: -50px; right: 0; 
+            color: #666; font-size: 30px; cursor: pointer; 
+            transition: 0.2s; font-weight: 100; font-family: sans-serif;
+        }
+        .close-modal:hover { color: var(--accent-color); }
+
+    </style>
+</head>
+<body>
+
+    <!-- FONDO -->
+    <div id="grained-container"></div>
+
+    <!-- MODAL INFO -->
+    <div id="infoModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleInfo()">✕</span>
+            <div class="modal-title">SONY WALKMAN TPS-L2</div>
+            <div class="modal-subtitle">DECONSTRUCCIÓN VISUAL [INFOGRAFÍA]</div>
+            <div class="modal-line"></div>
+            <div class="modal-body">
+                <p>INVESTIGACIÓN, REDACCIÓN, ILUSTRACIÓN Y DESARROLLO DE SHADERS<br>
+                <strong style="color:white; font-size:15px; letter-spacing:1px;">Joaquin Max Cuevas Ventura</strong><br>
+                2025</p>
+                <div class="modal-note">
+                    Nota: Este fue un ejercicio de diseño de información, por lo que esta publicación constituye un proyecto académico exento de cualquier propósito comercial o de lucro.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BARRA DE HERRAMIENTAS -->
+    <div id="custom-toolbar">
+        <button class="custom-btn" id="btn-zoom-in" title="Acercar"><i class="ti-zoom-in"></i></button>
+        <button class="custom-btn" id="btn-zoom-out" title="Alejar"><i class="ti-zoom-out"></i></button>
+        <button class="custom-btn" id="btn-full" title="Pantalla Completa"><i class="ti-fullscreen"></i></button>
+        <button class="custom-btn" id="btn-info" title="Información"><i class="ti-info-alt"></i></button>
+    </div>
+
+    <!-- VISOR -->
+    <div id="openseadragon-viewer"></div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/grained/0.0.2/grained.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+
+    <script>
+        // 1. GRANULADO
+        try {
+            grained('#grained-container', {
+                "animate": true, "patternWidth": 100, "patternHeight": 100,
+                "grainOpacity": 0.05, "grainDensity": 1, "grainWidth": 1, "grainHeight": 1
+            });
+        } catch(e) { console.log("Error cargando grano"); }
+
+        // 2. LÓGICA MODAL
+        function toggleInfo() {
+            var modal = document.getElementById('infoModal');
+            var btn = document.getElementById('btn-info');
+            
+            if (modal.classList.contains('show')) {
+                modal.classList.remove('show');
+                setTimeout(function() { modal.style.display = 'none'; }, 300); 
+                btn.classList.remove('active');
+            } else {
+                modal.style.display = 'flex';
+                setTimeout(function() { modal.classList.add('show'); }, 10);
+                btn.classList.add('active');
+            }
+        }
+        document.getElementById('btn-info').onclick = toggleInfo;
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('infoModal')) toggleInfo();
+        }
+
+        // 3. INICIAR VISOR OPENSEADRAGON
+        var imageName = "SONYWALKMANTPS-L2_InfografiaCompleta_WEB-FINAL_v01_19122025.png";
+
+        var viewer = OpenSeadragon({
+            id: "openseadragon-viewer",
+            prefixUrl: "", 
+            
+            tileSources: {
+                type: 'image',
+                url:  imageName,
+                buildPyramid: false
+            },
+
+            // Configuración
+            showNavigationControl: false,
+            wrapHorizontal: false,
+            wrapVertical: false,
+            visibilityRatio: 0.5,
+            minZoomImageRatio: 0.5,
+            maxZoomPixelRatio: 5,        
+            defaultZoomLevel: 0,         
+            
+            gestureSettingsMouse: {
+                clickToZoom: false,
+                scrollToZoom: true
+            },
+            animationTime: 0.4
+        });
+
+        // 4. VINCULACIÓN DE BOTONES
+        document.getElementById('btn-zoom-in').addEventListener('click', function() {
+            var currentZoom = viewer.viewport.getZoom();
+            viewer.viewport.zoomTo(currentZoom * 1.5);
+        });
+
+        document.getElementById('btn-zoom-out').addEventListener('click', function() {
+            var currentZoom = viewer.viewport.getZoom();
+            viewer.viewport.zoomTo(currentZoom / 1.5);
+        });
+
+        document.getElementById('btn-full').addEventListener('click', function() {
+            viewer.setFullScreen(!viewer.isFullScreen());
+        });
+
+    </script>
+
+</body>
+</html>
